@@ -25,10 +25,12 @@ async function VideoComponent({ fileName}) {
   const { url } = blobs[0]
 
   return (
-    <video autoPlay muted loop preload="none">
-      <source src={url} type="video/mp4" />
-      Your browser doesnt support video tag.
-    </video>
+    <div className="video-container">
+      <video autoPlay muted loop preload="none">
+        <source src={url} type="video/mp4" />
+        Your browser doesnt support video tag.
+      </video>
+    </div>
   )
 }
 
