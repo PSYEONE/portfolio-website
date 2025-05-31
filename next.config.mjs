@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    turbo: {
+  config: {
+    turbopack: {
       rules: {
         '*.mp4': {
           loaders: ['file-loader'],

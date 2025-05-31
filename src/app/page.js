@@ -1,4 +1,5 @@
-import React from 'react';
+import { React, Suspense } from 'react';
+import { list } from '@vercel/blob';
 
 const Title = () => {
   return (
@@ -10,11 +11,24 @@ const Title = () => {
 
 const Background = () => {
   return (
-    <div>
-      <video autoPlay loop muted>
-        <source src={require('./media/girls last tour/ep1.mp4')} type='video/mp4' />
-     </video>
-    </div>
+    <Suspense fallback={<p>Loading...</p>}>
+      <VideoComponent fileName="ep1.mp4" />
+    </Suspense>
+  )
+}
+
+async function VideoComponent({ fileName}) {
+  const { blobs } = await list({
+    prefix: fileName,
+    limit: 1,
+  })
+  const { url } = blobs[0]
+
+  return (
+    <video autoPlay muted loop preload="none">
+      <source src={url} type="video/mp4" />
+      Your browser doesn't support video tag.
+    </video>
   )
 }
 
