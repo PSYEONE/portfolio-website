@@ -27,7 +27,7 @@ async function VideoComponent({ fileName}) {
   return (
     <video autoPlay muted loop preload="none">
       <source src={url} type="video/mp4" />
-      Your browser doesn't support video tag.
+      Your browser doesnt support video tag.
     </video>
   )
 }
