@@ -4,7 +4,7 @@
   --background: #ffffff;
   --foreground: #171717;
 
-  --svgUrl: url(media/SVG/PSYEONE.svg);
+  --svgUrl: url(media/SVG/PSYEONE-merged.svg);
 }
 
 @theme inline {
@@ -33,6 +33,7 @@ body {
   height: 100%;
   overflow: hidden;
 }
+
 .video-container video {
   min-width: 100%;
   min-height: 100%;
@@ -45,18 +46,28 @@ body {
   object-fit: cover;
 }
 
-#svgWrapper {
+.svg-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  width:100%;
+  width: 100%;
   height: 100%;
   padding: 20%;
 }
 
-#svg {
+.svg-element {
+  flex: 1;
   width: 100%;
-  height: 100%;
   transform: translateZ(0);
 
+  /* Text invert to video with small blurring */
+  -webkit-backdrop-filter: invert(100%) blur(2px);
+  backdrop-filter: invert(100%) blur(2px);
+}
+
+#svg-title {
   /* Chrome, Safari and all webkit browsers */
   -webkit-mask-image: var(--svgUrl);
   -webkit-mask-size: contain;
@@ -68,8 +79,4 @@ body {
   mask-size: contain;
   mask-position: center;
   mask-repeat: no-repeat;
-
-  /* Text invert to video with small blurring */
-  -webkit-backdrop-filter: invert(100%) blur(2px);
-  backdrop-filter: invert(100%) blur(2px);
 }

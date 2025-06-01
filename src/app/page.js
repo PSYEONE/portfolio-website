@@ -1,18 +1,8 @@
 import { Suspense } from 'react';
 import { list } from '@vercel/blob';
 
-
-//Explores | Electronics | Motion Design | Photography
-//fonts to use: Albert Sans
 const Title = () => {
-  return (
-    <section id="svgWrapper">
-      <div id="svg"></div>
-      <svg>
-        <image className="backdrop-contrast-200" x="0" y="0" width="100%" height="100%"/>
-      </svg>
-    </section>
-  )
+  return <div id="svg-title" className="svg-element"></div>
 }
 
 const Background = () => {
@@ -44,10 +34,11 @@ const Home = () => {
   return (
     <div>
       <Background />
-      <Title />
+      <div className="svg-container">
+        <Title />
+      </div>
     </div>
   )
 }
-
 
 export default Home;
