@@ -1,28 +1,34 @@
-import { React, Suspense } from 'react';
+import { Suspense } from 'react';
 import { list } from '@vercel/blob';
 
+
+//Explores | Electronics | Motion Design | Photography
+//fonts to use: Albert Sans
 const Title = () => {
   return (
-    <h1>
-      Welcome to my portfolio!
-    </h1>
+    <section id="svgWrapper">
+      <div id="svg"></div>
+      <svg>
+        <image className="backdrop-contrast-200" x="0" y="0" width="100%" height="100%"/>
+      </svg>
+    </section>
   )
 }
 
 const Background = () => {
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <VideoComponent fileName="ep1-IbvNpSLRJPjm47sq6ZdVIgtZPirBTs.mp4" />
+      <VideoComponent fileName="ep1-IbvNpSLRJPjm47sq6ZdVIgtZPirBTs.mp4"/>
     </Suspense>
   )
 }
 
-async function VideoComponent({ fileName}) {
-  const { blobs } = await list({
+async function VideoComponent({fileName}) {
+  const {blobs} = await list({
     prefix: fileName,
     limit: 1,
   })
-  const { url } = blobs[0]
+  const {url} = blobs[0]
 
   return (
     <div className="video-container">
@@ -36,7 +42,10 @@ async function VideoComponent({ fileName}) {
 
 const Home = () => {
   return (
-    <Background />
+    <div>
+      <Background />
+      <Title />
+    </div>
   )
 }
 

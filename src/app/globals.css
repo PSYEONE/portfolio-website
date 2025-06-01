@@ -1,17 +1,15 @@
 @import "tailwindcss";
 
-
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --svgUrl: url(media/SVG/PSYEONE.svg);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,4 +43,33 @@ body {
   left: 50%;
   transform: translate(-50%,-50%);
   object-fit: cover;
+}
+
+#svgWrapper {
+  position: absolute;
+  width:100%;
+  height: 100%;
+  padding: 20%;
+}
+
+#svg {
+  width: 100%;
+  height: 100%;
+  transform: translateZ(0);
+
+  /* Chrome, Safari and all webkit browsers */
+  -webkit-mask-image: var(--svgUrl);
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+
+  /* FIREFOX */
+  mask-image: var(--svgUrl);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+
+  /* Text invert to video with small blurring */
+  -webkit-backdrop-filter: invert(100%) blur(2px);
+  backdrop-filter: invert(100%) blur(2px);
 }
