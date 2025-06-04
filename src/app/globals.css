@@ -60,11 +60,23 @@ body {
 .svg-element {
   flex: 1;
   width: 100%;
-  transform: translateZ(0);
+  transform: translateZ(0) scale(90%);
+  opacity: 0;
+
+  /* Initial animation */
+  animation: svg-initial-animation 3s ease-out forwards;
 
   /* Text invert to video with small blurring */
-  -webkit-backdrop-filter: invert(100%) blur(2px);
-  backdrop-filter: invert(100%) blur(2px);
+  -webkit-backdrop-filter: invert(0%) blur(2px);
+  backdrop-filter: invert(0%) blur(2px);
+}
+@keyframes svg-initial-animation {
+  to {
+    transform: translateZ(0) scale(100%);
+    -webkit-backdrop-filter: invert(100%) blur(2px);
+    backdrop-filter: invert(100%) blur(2px);
+    opacity: 1;
+  }
 }
 
 #svg-title {
