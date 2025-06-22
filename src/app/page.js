@@ -1,9 +1,52 @@
-import { Suspense } from 'react';
-import { list } from '@vercel/blob';
+'use client'
+
+import { Suspense, useEffect, useState, useRef } from 'react';
 
 const Title = () => {
-  return <div id="svg-title" className="svg-element"></div>
+  const [reposition, setReposition] = useState(false);
+  const repositionDelay = 7000; // 7 seconds
+  const elementRef = useRef(null);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleReposition();
+    }, repositionDelay);
+
+    return () => clearTimeout(timer); 
+  }, []);
+
+  const handleReposition = () => {
+    if (reposition) return;
+    const element = elementRef.current;
+    if (!element) return;
+    
+    // Get current transform from ongoing animation
+    const currentTransform = window.getComputedStyle(element).transform;
+    const currentOpacity = window.getComputedStyle(element).opacity;
+
+    // Cancel current animations and lock current position
+    const currentAnimations = element.getAnimations();
+    currentAnimations.forEach(anim => anim.cancel());
+    element.style.transform = currentTransform;
+    element.style.setProperty('--current-opacity', currentOpacity);
+
+    // Apply reposition animation
+    requestAnimationFrame(() => {
+      element.classList.add('reposition');
+    });
+    
+    // Set reposition to true
+    setReposition(true);
+  }
+
+  return (<div id="svg-title" ref={elementRef} className="svg-element" onClick={handleReposition}></div>)
 }
+
+/*
+const Title = () => {
+  return (<div id="svg-title" className="svg-element"></div>)
+}*/
 
 const Background = () => {
   let fileName = "";
@@ -45,18 +88,37 @@ const Background = () => {
 
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<p className="flex items-center justify-center" >PSYEONE LOADING</p>}>
       <VideoComponent fileName={fileName}/>
     </Suspense>
   )
 }
 
-async function VideoComponent({fileName}) {
-  const {blobs} = await list({
-    prefix: fileName,
-    limit: 1,
-  })
-  const {url} = blobs[0]
+function VideoComponent({fileName}) {
+  const [url, setUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(`/api/getBlobs?prefix=${fileName}`);
+        const data = await res.json();
+        if (data && data.length > 0) {
+          setUrl(data[0].url);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false); // Stop loading regardless of success/failure
+      }
+    }
+    fetchData();
+  }, [fileName]);
+
+  // Wait for loading to complete and URL to be available
+  if (loading || !url) {
+    return <div className="flex items-center justify-center min-h-screen"><p className="text-center" >PSYEONE LOADING</p></div>;
+  }
 
   return (
     <div className="video-container">
