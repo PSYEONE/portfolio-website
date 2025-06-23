@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState, useRef } from 'react';
 
 const Title = () => {
   const [reposition, setReposition] = useState(false);
-  const repositionDelay = 7000; // 7 seconds
+  const repositionDelay = 5000; // 7 seconds
   const elementRef = useRef(null);
 
 
@@ -29,6 +29,8 @@ const Title = () => {
     const currentAnimations = element.getAnimations();
     currentAnimations.forEach(anim => anim.cancel());
     element.style.transform = currentTransform;
+
+    // Set current opacity to be saved for animation overwrite
     element.style.setProperty('--current-opacity', currentOpacity);
 
     // Apply reposition animation
@@ -42,11 +44,6 @@ const Title = () => {
 
   return (<div id="svg-title" ref={elementRef} className="svg-element" onClick={handleReposition}></div>)
 }
-
-/*
-const Title = () => {
-  return (<div id="svg-title" className="svg-element"></div>)
-}*/
 
 const Background = () => {
   let fileName = "";
@@ -122,7 +119,7 @@ function VideoComponent({fileName}) {
 
   return (
     <div className="video-container">
-      <video autoPlay muted loop preload="none">
+      <video autoPlay muted loop>
         <source src={url} type="video/mp4" />
         Your browser doesnt support video tag.
       </video>
