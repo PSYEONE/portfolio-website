@@ -104,5 +104,20 @@ body {
   mask-image: var(--svgUrl);
   mask-size: contain;
   mask-position: center;
-  mask-repeat: no-repeat;
+  mask-repeat: trano-repeat;
 }
+
+@keyframes fadeInScaleUp {
+  from {
+    opacity: 0;
+    transform:translateY(10%) scale(80%)
+  }
+  to {
+    opacity: 1;
+    transform:translateY(0%) scale(100%);
+  }
+}
+
+.button-initial-animation {
+  animation: fadeInScaleUp 1.5s cubic-bezier(0.770, 0.000, 0.23, 1.000) forwards;
+  }

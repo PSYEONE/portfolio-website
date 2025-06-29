@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState, useRef } from 'react';
 
-const Title = () => {
+const Title = ({ onReposition }) => {
   const [initial, setInitial] = useState(false);
   const [reposition, setReposition] = useState(false);
   const repositionDelay = 5000; // 5 seconds
@@ -41,6 +41,7 @@ const Title = () => {
     
     // Set reposition to true
     setReposition(true);
+    onReposition?.(true);
   }
 
   return (<div id="svg-title" ref={elementRef} className="svg-element" onClick={handleReposition}></div>)
@@ -50,13 +51,13 @@ const Buttons = () => {
   
 
   return (<div className="grid grid-cols-3 gap-8 content-center absolute">
-            <button className="backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out ">
+            <button className="opacity-0 backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out button-initial-animation" style={{animationDelay: 0 + "ms"}}>
               EXPLORATION
             </button>
-            <button className="backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out ">
+            <button className="opacity-0 backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out button-initial-animation" style={{animationDelay: 100 + "ms"}}>
               PROJECTS
             </button>
-            <button className="backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out">
+            <button className="opacity-0 backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out button-initial-animation" style={{animationDelay: 200 + "ms"}}> 
               ABOUT ME
             </button>
           </div>)
@@ -147,10 +148,15 @@ function VideoComponent({ fileName, onVideoLoaded }) {
 
 const Home = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isRepositionAnimated, setIsRepositionAnimated] = useState(false);
 
   const handleVideoLoaded = () => {
     setVideoLoaded(true);
   };
+
+  const handleReposition = () => {
+    setIsRepositionAnimated(true);
+  }
 
   return (
     <div>
@@ -158,8 +164,10 @@ const Home = () => {
       {videoLoaded && (
         <div>
           <div className="page-container">
-            <Title />
-            <Buttons />
+            <Title onReposition={handleReposition} />
+            {isRepositionAnimated && (
+              <Buttons />
+            )}
           </div>
         </div>
       )}
