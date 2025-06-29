@@ -3,12 +3,13 @@
 import { Suspense, useEffect, useState, useRef } from 'react';
 
 const Title = () => {
+  const [initial, setInitial] = useState(false);
   const [reposition, setReposition] = useState(false);
-  const repositionDelay = 5000; // 7 seconds
+  const repositionDelay = 5000; // 5 seconds
   const elementRef = useRef(null);
 
-
   useEffect(() => {
+    
     const timer = setTimeout(() => {
       handleReposition();
     }, repositionDelay);
@@ -45,7 +46,23 @@ const Title = () => {
   return (<div id="svg-title" ref={elementRef} className="svg-element" onClick={handleReposition}></div>)
 }
 
-const Background = () => {
+const Buttons = () => {
+  
+
+  return (<div className="grid grid-cols-3 gap-8 content-center absolute">
+            <button className="backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out ">
+              EXPLORATION
+            </button>
+            <button className="backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out ">
+              PROJECTS
+            </button>
+            <button className="backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out">
+              ABOUT ME
+            </button>
+          </div>)
+}
+
+const Background = ({onVideoLoaded}) => {
   let fileName = "";
 
   const RandomInt = Math.floor(Math.random() * 9);
@@ -86,12 +103,12 @@ const Background = () => {
 
   return (
     <Suspense fallback={<p className="flex items-center justify-center" >PSYEONE LOADING</p>}>
-      <VideoComponent fileName={fileName}/>
+      <VideoComponent fileName={fileName} onVideoLoaded={onVideoLoaded}/>
     </Suspense>
   )
 }
 
-function VideoComponent({fileName}) {
+function VideoComponent({ fileName, onVideoLoaded }) {
   const [url, setUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   
@@ -107,10 +124,11 @@ function VideoComponent({fileName}) {
         console.error('Error:', error);
       } finally {
         setLoading(false); // Stop loading regardless of success/failure
+        onVideoLoaded();
       }
     }
     fetchData();
-  }, [fileName]);
+  }, [fileName, onVideoLoaded]);
 
   // Wait for loading to complete and URL to be available
   if (loading || !url) {
@@ -128,12 +146,23 @@ function VideoComponent({fileName}) {
 }
 
 const Home = () => {
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
+  const handleVideoLoaded = () => {
+    setVideoLoaded(true);
+  };
+
   return (
     <div>
-      <Background />
-      <div className="svg-container">
-        <Title />
-      </div>
+      <Background onVideoLoaded={handleVideoLoaded} />
+      {videoLoaded && (
+        <div>
+          <div className="page-container">
+            <Title />
+            <Buttons />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
