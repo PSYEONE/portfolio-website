@@ -47,21 +47,21 @@ const Title = ({ onReposition }) => {
   return (<div id="svg-title" ref={elementRef} className="svg-element" onClick={handleReposition}></div>)
 }
 
-const Buttons = () => {
-  
 
+const Buttons = () => {
   return (<div className="grid grid-cols-3 gap-8 content-center absolute">
-            <button className="opacity-0 backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out button-initial-animation" style={{animationDelay: 0 + "ms"}}>
+            <button className="opacity-0 backdrop-invert p-8 text-center font-bold text-shadow-lg/50 transition button-initial-animation" style={{animationDelay: 0 + "ms"}}>
               EXPLORATION
             </button>
-            <button className="opacity-0 backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out button-initial-animation" style={{animationDelay: 100 + "ms"}}>
+            <button className="opacity-0 backdrop-invert p-8 text-center font-bold text-shadow-lg/50 transition button-initial-animation" style={{animationDelay: 100 + "ms"}}>
               PROJECTS
             </button>
-            <button className="opacity-0 backdrop-invert p-8 text-center font-bold text-shadow-lg/50 hover:backdrop-invert-0 hover:backdrop-blur-sm transition duration-150 ease-in-out button-initial-animation" style={{animationDelay: 200 + "ms"}}> 
+            <button className="opacity-0 backdrop-invert p-8 text-center font-bold text-shadow-lg/50 transition button-initial-animation" style={{animationDelay: 200 + "ms"}}> 
               ABOUT ME
             </button>
           </div>)
 }
+
 
 const Background = ({onVideoLoaded}) => {
   let fileName = "";

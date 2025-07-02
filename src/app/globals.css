@@ -120,4 +120,11 @@ body {
 
 .button-initial-animation {
   animation: fadeInScaleUp 1.5s cubic-bezier(0.770, 0.000, 0.23, 1.000) forwards;
-  }
+  transition: backdrop-filter outline-color 0.1s ease-in-out;
+  outline: 2px double transparent;
+}
+
+.button-initial-animation:hover {
+  backdrop-filter: invert(0%) blur(5px);
+  outline-color: #fff;
+}  
