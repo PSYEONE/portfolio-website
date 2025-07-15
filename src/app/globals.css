@@ -74,7 +74,7 @@ body {
 .svg-element.reposition {
   /* Reposition animation */
   opacity: var(--current-opacity);
-  animation: svg-reposition-animation 1.25s cubic-bezier(0.770, 0.000, 0.23, 1.000) /* easeInOutQuart */ forwards;
+  animation: svg-reposition-animation 1.4s cubic-bezier(0.770, 0.000, 0.23, 1.000) /* easeInOutQuart */ forwards;
 }
 
 @keyframes svg-initial-animation {
@@ -121,10 +121,10 @@ body {
 .button-initial-animation {
   animation: fadeInScaleUp 1.5s cubic-bezier(0.770, 0.000, 0.23, 1.000) forwards;
   transition: backdrop-filter outline-color 0.1s ease-in-out;
-  outline: 2px double transparent;
+  outline: 2px solid transparent;
 }
 
 .button-initial-animation:hover {
-  backdrop-filter: invert(0%) blur(5px);
+  backdrop-filter: invert(0%) blur(8px);
   outline-color: #fff;
 }  
